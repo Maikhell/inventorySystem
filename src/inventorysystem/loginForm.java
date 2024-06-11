@@ -47,7 +47,7 @@ public class loginForm extends javax.swing.JFrame {
         usernameTxtfield.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         usernameLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        usernameLbl.setText("Usernae:");
+        usernameLbl.setText("Username:");
 
         passwordLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         passwordLbl.setText("Password:");
