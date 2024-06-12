@@ -8,6 +8,12 @@ package inventorysystem;
  *
  * @author J-Michael
  */
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class loginForm extends javax.swing.JFrame {
 
     /**
@@ -34,7 +40,6 @@ public class loginForm extends javax.swing.JFrame {
         usernameLbl = new javax.swing.JLabel();
         passwordLbl = new javax.swing.JLabel();
         psswordField = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
         imagePanelRight = new javax.swing.JPanel();
         imageContainer = new javax.swing.JPanel();
         txtContainer = new javax.swing.JPanel();
@@ -43,11 +48,16 @@ public class loginForm extends javax.swing.JFrame {
 
         loginBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         loginBtn.setText("Log in");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         usernameTxtfield.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         usernameLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        usernameLbl.setText("Usernme:");
+        usernameLbl.setText("Username:");
 
         passwordLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         passwordLbl.setText("Password:");
@@ -59,46 +69,38 @@ public class loginForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Register");
-
         javax.swing.GroupLayout innerPanelLeftLayout = new javax.swing.GroupLayout(innerPanelLeft);
         innerPanelLeft.setLayout(innerPanelLeftLayout);
         innerPanelLeftLayout.setHorizontalGroup(
             innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(innerPanelLeftLayout.createSequentialGroup()
-                .addGroup(innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(psswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(innerPanelLeftLayout.createSequentialGroup()
-                            .addGap(129, 129, 129)
-                            .addComponent(loginBtn))
-                        .addGroup(innerPanelLeftLayout.createSequentialGroup()
-                            .addGap(57, 57, 57)
-                            .addGroup(innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1)
-                                .addComponent(usernameTxtfield, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(usernameLbl, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addGroup(innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(innerPanelLeftLayout.createSequentialGroup()
-                        .addComponent(passwordLbl)
-                        .addGap(154, 154, 154)))
+                        .addGap(57, 57, 57)
+                        .addGroup(innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usernameLbl)
+                            .addComponent(usernameTxtfield, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordLbl)
+                            .addComponent(psswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(innerPanelLeftLayout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(loginBtn)))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         innerPanelLeftLayout.setVerticalGroup(
             innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerPanelLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(usernameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(usernameLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usernameTxtfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(34, 34, 34)
                 .addComponent(passwordLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(psswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
+                .addGap(42, 42, 42)
                 .addComponent(loginBtn)
-                .addGap(42, 42, 42))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout loginPanelLeftLayout = new javax.swing.GroupLayout(loginPanelLeft);
@@ -208,6 +210,36 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_psswordFieldActionPerformed
 
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        String userName = usernameTxtfield.getText();
+        String userPassword = String.valueOf(psswordField.getPassword());
+
+        // String query na magch-check sa username at passowrd
+        String sqlSelect = "SELECT * FROM admin_tb WHERE BINARY userName=? and BINARY userPassword=?";
+
+        try {
+            Connection myConn = ConDB.getConnection(); //connection sa database
+
+            PreparedStatement ps = myConn.prepareStatement(sqlSelect);
+            ps.setString(1, userName);
+            ps.setString(2, userPassword);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(rootPane, "Welcome " + userName + "!");
+
+                //dito lalabas yung dashboard
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect Username or Password!");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+
+    }//GEN-LAST:event_loginBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,6 +266,13 @@ public class loginForm extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(loginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -247,7 +286,6 @@ public class loginForm extends javax.swing.JFrame {
     private javax.swing.JPanel imageContainer;
     private javax.swing.JPanel imagePanelRight;
     private javax.swing.JPanel innerPanelLeft;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPanel loginPanelLeft;
     private javax.swing.JPanel mainPanel;

@@ -8,6 +8,7 @@ package inventorysystem;
  *
  * @author J-Michael
  */
+import java.sql.Connection;
 public class registerForm extends javax.swing.JFrame {
 
     /**
@@ -37,6 +38,8 @@ public class registerForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         psswordField1 = new javax.swing.JPasswordField();
         passwordLbl1 = new javax.swing.JLabel();
+        emailTxtfield1 = new javax.swing.JTextField();
+        emailLbl1 = new javax.swing.JLabel();
         imagePanelRight = new javax.swing.JPanel();
         imageContainer = new javax.swing.JPanel();
         txtContainer = new javax.swing.JPanel();
@@ -73,6 +76,11 @@ public class registerForm extends javax.swing.JFrame {
         passwordLbl1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         passwordLbl1.setText("Confirm Password:");
 
+        emailTxtfield1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        emailLbl1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        emailLbl1.setText("Email:");
+
         javax.swing.GroupLayout innerPanelLeftLayout = new javax.swing.GroupLayout(innerPanelLeft);
         innerPanelLeft.setLayout(innerPanelLeftLayout);
         innerPanelLeftLayout.setHorizontalGroup(
@@ -87,27 +95,33 @@ public class registerForm extends javax.swing.JFrame {
                         .addComponent(passwordLbl)
                         .addComponent(psswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(psswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(passwordLbl1)))
+                        .addComponent(passwordLbl1)
+                        .addComponent(emailTxtfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(emailLbl1)))
                 .addContainerGap(43, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerPanelLeftLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(loginBtn)
-                .addGap(119, 119, 119))
+                .addGap(118, 118, 118))
         );
         innerPanelLeftLayout.setVerticalGroup(
             innerPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerPanelLeftLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usernameLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usernameTxtfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emailLbl1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(emailTxtfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(passwordLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(psswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(passwordLbl1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(psswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -264,6 +278,8 @@ public class registerForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel emailLbl1;
+    private javax.swing.JTextField emailTxtfield1;
     private javax.swing.JPanel imageContainer;
     private javax.swing.JPanel imagePanelRight;
     private javax.swing.JPanel innerPanelLeft;
